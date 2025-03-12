@@ -15,6 +15,7 @@ public class RoundRobinSimulation {
     private static DatacenterBroker brokerEven;
     private static DatacenterBroker brokerUneven;
     private SimulationConfig config;
+    private SimulationLogger simulationLogger;
     private Datacenter datacenter;
 
     // Track submission times for cloudlets
@@ -29,9 +30,15 @@ public class RoundRobinSimulation {
 
     public RoundRobinSimulation(SimulationConfig config) {
         this.config = config;
+        this.simulationLogger = new SimulationLogger();
+    }
+    
+    public String getLogs()  {
+    	return simulationLogger.getLogs();
     }
 
     public String runSimulation() {
+    	simulationLogger.startLogging(); // Start capturing logs
         System.out.println("Starting Load Balancing Simulation with Round Robin...");
         try {
             CloudSim.init(1, Calendar.getInstance(), false);
@@ -84,7 +91,8 @@ public class RoundRobinSimulation {
             e.printStackTrace();
             System.err.println("Simulation terminated due to an error.");
             return "{\"error\": \"Simulation failed\"}";
-        }
+        } finally {
+        	simulationLogger.stopLogging();       }
     }
 
     private Datacenter createDatacenter(String name) {
@@ -429,9 +437,6 @@ public class RoundRobinSimulation {
         // Add response time
         results.put("responseTimeEven", calculateResponseTime(brokerEven.getCloudletReceivedList()));
         results.put("responseTimeUneven", calculateResponseTime(brokerUneven.getCloudletReceivedList()));
-
-        // Add resource utilization
-        List<Host> hosts = datacenter.getHostList();
         results.put("hostResourceUtilization", calculateHostResourceUtilization());
 
         results.put("vmResourceUtilizationEven", calculateVmResourceUtilization(vmListEven));
