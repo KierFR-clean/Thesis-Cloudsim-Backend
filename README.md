@@ -298,4 +298,3 @@ mvn exec:java -pl modules/cloudsim-examples/ -Dexec.mainClass=org.cloudbus.cloud
   git reset --soft HEAD~1
   ```
 
- 
