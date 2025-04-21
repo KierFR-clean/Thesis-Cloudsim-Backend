@@ -12,7 +12,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.cloudbus.cloudsim.VmAllocationPolicy.GuestMapping;
-import org.cloudbus.cloudsim.core.*;
+import org.cloudbus.cloudsim.core.CloudActionTags;
+import org.cloudbus.cloudsim.core.CloudSim;
+import org.cloudbus.cloudsim.core.CloudSimTags;
+import org.cloudbus.cloudsim.core.GuestEntity;
+import org.cloudbus.cloudsim.core.HostEntity;
+import org.cloudbus.cloudsim.core.SimEntity;
+import org.cloudbus.cloudsim.core.SimEvent;
 
 /**
  * Datacenter class is a CloudResource whose hostList are virtualized. It deals with processing of
@@ -992,7 +998,7 @@ public class Datacenter extends SimEntity {
 	 * 
 	 * @return the datacenter characteristics
 	 */
-	protected DatacenterCharacteristics getCharacteristics() {
+	public DatacenterCharacteristics getCharacteristics() {
 		return characteristics;
 	}
 
